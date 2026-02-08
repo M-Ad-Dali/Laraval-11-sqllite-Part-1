@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('job_listings', function (Blueprint $table) {
             $table->id();
+                        // $table->unsignedBigInteger('employer_id'); /* [تحديد نوع العمود كـ unsignedBigInteger ليتوافق مع نوع المفتاح الأساسي في جدول المستخدمين] */
+            $table->foreignIdFor(\App\Models\Employer::class); /* [استخدام foreignId لتحديد العلاقة بين جداول المستخدمين وأصحاب العمل] */
             $table->string('title');
             $table->string('salary');
             $table->timestamps();
