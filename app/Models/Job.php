@@ -6,34 +6,32 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr; 
 
 
-class job { // [الطريقة الاحدث في لارفل لتعريف البيانات] 
-    public static function all(): array
-    {
-        return [
-            [
-                'id' => 1,
-                'title' => 'Director',
-                'salary' => '$50,000'
-            ],
-            [
-                'id' => 2,
-                'title' => 'Programmer',
-                'salary' => '$10,000'
-            ],
-            [
-                'id' => 3,
-                'title' => 'Teacher',
-                'salary' => '$40,000'
-            ]
-        ];
-    }
+// class job { // [الطريقة الاحدث في لارفل لتعريف البيانات يدوياً] 
+//     public static function all(): array
+//     {
+//         return [
+//             [
+//                 'id' => 1,
+//                 'title' => 'Director',
+//                 'salary' => '$50,000'
+//             ],
+//             [
+//                 'id' => 2,
+//                 'title' => 'Programmer',
+//                 'salary' => '$10,000'
+//             ],
+//             [
+//                 'id' => 3,
+//                 'title' => 'Teacher',
+//                 'salary' => '$40,000'
+//             ]
+//         ];
+//     }
 
-    public static function find(int $id): array
-    {
-        $job = Arr::first(static::all(), fn($job) => $job['id'] == $id);
-        if (!$job) {
-            abort(404);
-        }
-        return $job;
-    }
+class Job extends Model{ 
+
+    protected $table = 'job_listings'; /* [تحديد اسم الجدول في قاعدة البيانات] */
+
+    protected $fillable = ['title', 'salary'];
+
 }
