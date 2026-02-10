@@ -27,3 +27,6 @@ php artisan tinker
 |\-> $tag = App\Models\Tag::find(1); // نمسك الوسم رقم 1
 |\-> $tag->jobs()->attach(7); // نربطه بالوظيفة رقم 7
 |\-> $tag->jobs()->git();
+13- php artisan db:seed [هو وسيلة Laravel السريعة والذكية لإدخال بيانات تجريبية]
+14- php artisan make:seeder [إنشاء ملف سيدر لحفض بيانات قاعدة البيانات]
+13- php artisan db:seed --class=JobSeeder [JobSeeder تخبر: "لا تشغل كل شيء، فقط قم بتنفيذ التعليمات الموجودة داخل ملف]
