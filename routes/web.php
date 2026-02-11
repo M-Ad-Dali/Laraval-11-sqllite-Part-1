@@ -64,16 +64,37 @@ Route::get('/contact', function () {
 //         ]);
 //     });
 
+Route::get('/jobs/create', function () {
+    return view('jobs.create');
+    });
+
     Route::get('/jobs', function () {
-        return view('jobs',[
-    
+        return view('jobs.index',[
             // 'jobs' => job::all() // [طريقة جلب البيانات من قاعدة البيانات بدون علاقة بين الجداول] [تحميل كسول للبيانات]
             // 'jobs' => Job::with('employer')->paginate(3) // [جلب ثلاثة بس في كل صفحة]
-            // 'jobs' => Job::with('employer')->simplePaginate(3) // [جلب ثلاثة بس في كل صفحة]
-            'jobs' => Job::with('employer')->cursorPaginate(3) // [جلب ثلاثة بس في كل صفحة]
+            'jobs' => Job::with('employer')->latest()->simplePaginate(3) // [جلب ثلاثة بس في كل صفحة]
+            // 'jobs' => Job::with('employer')->cursorPaginate(3) // [جلب ثلاثة بس في كل صفحة]
             // 'jobs' => Job::with('employer')->get() /* [with('employer') = eager loading] */
         ]);
     });
+
+Route::post('/jobs', function () {
+    $job = new Job();
+
+    // $job->title = request('title'); // [طريقة 1]
+    // $job->salary = request('salary');
+    // $job->employer_id = 1;
+
+    // $job->save();
+
+    // dd(request()->all());// [dd = dump and die] [request()->all() = جلب كل البيانات اللي تم ارسالها من الفورم]
+    Job::create([ /* [طريقة 2] */
+        'title' => request('title'),
+        'salary' => request('salary'),
+        'employer_id' => 1
+    ]);
+    return redirect('/jobs');
+});
 
     Route::get('/jobs/{id}', function ($id) {
 
@@ -81,5 +102,5 @@ Route::get('/contact', function () {
 
         // dd($job);
 
-            return view('job', ['job' => $job]);
+            return view('jobs.show', ['job' => $job]);
     });
