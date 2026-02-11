@@ -15,7 +15,7 @@
           <label for="title" class="block text-sm/6 font-medium text-gray-900">Title</label>
           <div class="mt-2">
             <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600">
-              <input id="title" type="text" name="title" placeholder="Shift Leader" class="block min-w-0 grow bg-white py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" />
+              <input id="title" type="text" name="title" placeholder="Shift Leader" class="block min-w-0 grow bg-white py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6" /  required>
             </div>
             @error('title') {{-- [طريقة 1] --}}
               <p class="text-red-500 italic font-semibold mt-1">{{ $message }}</p>

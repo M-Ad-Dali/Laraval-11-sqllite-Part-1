@@ -62,27 +62,37 @@ Route::get('/contact', function () {
 //                 ]
 //             ]
 //         ]);
-//     });
+//     })
 
+// Index
+Route::get('/jobs', function () {
+    return view('jobs.index',[
+        // 'jobs' => job::all() // [طريقة جلب البيانات من قاعدة البيانات بدون علاقة بين الجداول] [تحميل كسول للبيانات]
+        // 'jobs' => Job::with('employer')->paginate(3) // [جلب ثلاثة بس في كل صفحة]
+        'jobs' => Job::with('employer')->latest()->simplePaginate(3) // [جلب ثلاثة بس في كل صفحة]
+        // 'jobs' => Job::with('employer')->cursorPaginate(3) // [جلب ثلاثة بس في كل صفحة]
+        // 'jobs' => Job::with('employer')->get() /* [with('employer') = eager loading] */
+    ]);
+});;
+
+// Create
 Route::get('/jobs/create', function () {
     return view('jobs.create');
-    });
+});
 
-    Route::get('/jobs', function () {
-        return view('jobs.index',[
-            // 'jobs' => job::all() // [طريقة جلب البيانات من قاعدة البيانات بدون علاقة بين الجداول] [تحميل كسول للبيانات]
-            // 'jobs' => Job::with('employer')->paginate(3) // [جلب ثلاثة بس في كل صفحة]
-            'jobs' => Job::with('employer')->latest()->simplePaginate(3) // [جلب ثلاثة بس في كل صفحة]
-            // 'jobs' => Job::with('employer')->cursorPaginate(3) // [جلب ثلاثة بس في كل صفحة]
-            // 'jobs' => Job::with('employer')->get() /* [with('employer') = eager loading] */
-        ]);
-    });
+// Show
+Route::get('/jobs/{id}', function ($id) {
+    $job = job::find($id);
+    // dd($job);
+        return view('jobs.show', ['job' => $job]);
+});
 
+// Store
 Route::post('/jobs', function () {
     request()->validate([
         'title' => ['required', 'min:3'],
         'salary' => ['required']
-    ]);
+]);
 
     // $job = new Job(); // [طريقة 1]
 
@@ -101,11 +111,35 @@ Route::post('/jobs', function () {
     return redirect('/jobs');
 });
 
-    Route::get('/jobs/{id}', function ($id) {
+// Edit
+Route::get('/jobs/{id}/edit', function ($id) {
+    $job = job::find($id);
+    // dd($job);
+        return view('jobs.edit', ['job' => $job]);
+});
 
-        $job = job::find($id);
+// Update
+Route::patch('/jobs/{id}', function ($id) {
+    request()->validate([
+        'title' => ['required', 'min:3'],
+        'salary' => ['required']
+]);
 
-        // dd($job);
+    $job = Job::findOrFail($id);  // [findOrFail = جلب البيانات أو إظهار خطأ 404 إذا لم يتم العثور عليها] null
 
-            return view('jobs.show', ['job' => $job]);
-    });
+    $job->update([ 
+        'title' => request('title'),
+        'salary' => request('salary')
+    ]);
+
+    return redirect('/jobs/' . $job->id);
+
+});
+
+// Destroy
+Route::delete('/jobs/{id}', function ($id) {
+    Job::findOrFail($id)->delete(); // [delete = حذف البيانات]
+
+    return redirect('/jobs'); 
+
+});
