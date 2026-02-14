@@ -7,7 +7,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 
-// class job { // [الطريقة الاحدث في لارفل لتعريف البيانات يدوياً] 
+// class job { [الطريقة القديمة الفانية لتعريف البيانات]
 //     public static function all(): array
 //     {
 //         return [
