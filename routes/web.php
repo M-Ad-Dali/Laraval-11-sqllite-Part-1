@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JobController;
+use App\Http\Controllers\RegisterUserController;
+use App\Http\Controllers\SessionController;
 
 // $jobs = [ // [الطريقة القديمة الفانية لتعريف البيانات] 
 //     [
@@ -107,7 +109,7 @@ use App\Http\Controllers\JobController;
 //     Route::get('/jobs/{job}', 'show');// [ ID عن السجل الذي يطابق الـ jobs البحث في جدول الـ ]
 
 //     // Store
-//     Route::post('/jobs', 'stor');
+//     Route::post('/jobs', 'store');
 
 //     // Edit
 //     Route::get('/jobs/{job}/edit', 'edit');
@@ -131,3 +133,12 @@ Route::view('/about', 'about');
 Route::view('/contact', 'contact');
 
 Route::resource('jobs', JobController::class); // [هذي الطريقة مستخدمة لختصار الكود عندما يكون في نفس الكلاس] [JobController::class = جلب كل المسارات من الكنترولر]
+
+// Auth
+Route::get('/register', [RegisterUserController::class, 'create']);
+Route::post('/register', [RegisterUserController::class, 'store']);
+
+Route::get('/login', [SessionController::class, 'create']);
+Route::post('/login', [SessionController::class, 'store']);
+
+Route::post('/logout', [SessionController::class, 'destroy']);
