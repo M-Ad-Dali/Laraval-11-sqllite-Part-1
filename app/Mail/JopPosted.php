@@ -16,7 +16,7 @@ class JopPosted extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct(public $job) // [public $job = تعريف خاصية عامة في الكلاس لتخزين بيانات الوظيفة التي تم إرسالها من الكنترولر] [عشان تقدر تستخدمها في الواجهة البريدية]
     {
         //
     }
@@ -27,7 +27,8 @@ class JopPosted extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'mail.job-posted',
+            subject: 'Jop Posted',
+            from: 'admin@gmail.com', //[from = عنوان البريد الإلكتروني الذي سيتم إرسال الرسالة منه]
         );
     }
 
@@ -37,7 +38,7 @@ class JopPosted extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'mail.job-posted'
         );
     }
 

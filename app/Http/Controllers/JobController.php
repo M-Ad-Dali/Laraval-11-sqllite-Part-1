@@ -4,17 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\job;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Http\Request;
+use App\Mail\JopPosted;
+use Illuminate\Support\Facades\Mail;
 
 class JobController extends Controller
 {
     public function index()
     {
         
-        $jobs = Job::with('employer')->cursorPaginate(3); // [جلب ثلاثة بس في كل صفحة]
+        $jobs = Job::with('employer')->latest()->simplePaginate(3); // [جلب ثلاثة بس في كل صفحة] [latest() = ترتيب البيانات من الأحدث إلى الأقدم] [simplePaginate() = جلب البيانات بدون إظهار عدد الصفحات الكلي في الواجهة]
+        // $jobs = Job::with('employer')->cursorPaginate(3); // [جلب ثلاثة بس في كل صفحة]
         // $jobs = job::all(); // [طريقة جلب البيانات من قاعدة البيانات بدون علاقة بين الجداول] [تحميل كسول للبيانات]
-        // $jobs = Job::with('employer')->latest()->simplePaginate(3); // [جلب ثلاثة بس في كل صفحة] [latest() = ترتيب البيانات من الأحدث إلى الأقدم] [simplePaginate() = جلب البيانات بدون إظهار عدد الصفحات الكلي في الواجهة]
         // $jobs = Job::with('employer')->paginate(3); // [جلب ثلاثة بس في كل صفحة]
         // $jobs = Job::with('employer')->get() /* [with('employer'); = eager loading] */
         return view('jobs.index', [
@@ -48,11 +48,15 @@ class JobController extends Controller
         // $job->save();
 
         // dd(request()->all());// [dd = dump and die] [request()->all() = جلب كل البيانات اللي تم ارسالها من الفورم]
-        Job::create([/* [طريقة 2] */
+        $job =Job::create([/* [طريقة 2] */
             'title' => request('title'),
             'salary' => request('salary'),
             'employer_id' => 1,
         ]);
+
+        Mail::to($job->employer->user)->send(
+        new JopPosted($job)
+        );
 
         return redirect('/jobs');
     }

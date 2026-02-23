@@ -33,3 +33,4 @@ php artisan tinker
 16 - php artisan route:list []
 17 - php artisan route:list --except-vendor []
 18 - php artisan make:policy []
+19 - php artisan make:mail []
