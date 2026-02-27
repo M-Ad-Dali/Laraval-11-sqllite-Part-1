@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\RegisterUserController;
 use App\Http\Controllers\SessionController;
+use App\Jobs\TranslateJob;
+use App\Models\Job;
 
 // $jobs = [ // [الطريقة القديمة الفانية لتعريف البيانات] 
 //     [
@@ -127,6 +129,24 @@ use App\Http\Controllers\SessionController;
 // ]);
 
 // Route::resource('jobs', JobController::class)->middleware('auth'); // [هذي الطريقة مستخدمة لختصار الكود عندما يكون في نفس الكلاس] [JobController::class = جلب كل المسارات من الكنترولر] [middleware('auth') = حماية جميع مسارات الوظائف من الوصول غير المصرح به]
+
+
+
+
+
+
+
+
+
+
+
+Route::get('test', function () {
+    $job = Job::first();
+
+    TranslateJob::dispatch($job);
+
+    return 'Done';
+});
 
 Route::view('/', 'home');
 
