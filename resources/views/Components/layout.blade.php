@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Home</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    @vite(['resources/js/app.js'])
+    {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
 </head>
 
 <body class="h-full">
@@ -14,7 +15,7 @@
     <x-nav-link href="/">Home</x-nav-link>
     <x-nav-link href="/about">About</x-nav-link>
     <x-nav-link href="/contact">Contact</x-nav-link>
-  </nav> --}}
+    </nav> --}}
 
     <!-- Include this script tag or install `@tailwindplus/elements` via npm: -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script> -->
@@ -41,15 +42,15 @@
                     <div class="hidden md:block">
                         <div class="ml-4 flex items-center md:ml-6">
                             @guest {{-- [التحقق من تسجيل الدخول اذا سجلت دخول تظهر لو اوت] --}}
-                              <x-nav-link href="/login" :active="request()->is('login')">Log in</x-nav-link>
-                              <x-nav-link href="/register" :active="request()->is('register')">Register</x-nav-link>
+                                <x-nav-link href="/login" :active="request()->is('login')">Log in</x-nav-link>
+                                <x-nav-link href="/register" :active="request()->is('register')">Register</x-nav-link>
                             @endguest
 
                             @auth {{-- [التحقق من تسجيل الخروج اذا سجلت خروج تظهر لةج ان] --}}
-                            <form action="/logout" method="POST">
-                                @csrf
-                                <x-form-button>Log Out</x-form-button>
-                            </form>
+                                <form action="/logout" method="POST">
+                                    @csrf
+                                    <x-form-button>Log Out</x-form-button>
+                                </form>
                             @endauth
                         </div>
                     </div>
